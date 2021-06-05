@@ -27,18 +27,16 @@ const solution = {
 };
 
 
-function flattenRecursively(object, flattenObject, flattenKey){
-  for([key, value] of Object.entries(object)){
-    if(typeof value === 'object'){
-      let newKey;
-      if(flattenKey != ''){
-        newKey = flattenKey + '.' + key;
-      }else {
-        newKey =  key;
-      }
+function flattenRecursively(object, flattenObject, flattenKey) {
+  for ([key, value] of Object.entries(object)) {
+    let newKey = key;
+    if (flattenKey != '') {
+      newKey = flattenKey + '.' + key;
+    }
+    if (typeof value === 'object') {
       flattenRecursively(value, flattenObject, newKey);
-    }else {
-      if(flattenKey != ''){
+    } else {
+      if (flattenKey != '') {
         key = flattenKey + '.' + key;
       }
       flattenObject[key] = value;
@@ -47,9 +45,9 @@ function flattenRecursively(object, flattenObject, flattenKey){
   return flattenObject;
 }
 
-function flatten(obj){
+function flatten(obj) {
   let object = {};
-  flattenRecursively(obj,object , '');
+  flattenRecursively(obj, object, '');
   return object;
 }
 
