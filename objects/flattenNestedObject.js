@@ -26,49 +26,31 @@ const solution = {
   'h.0.j': 3
 };
 
-function flattenNestedObject(object) {
-  let flattened = {};
-  for (let [key, value] of Object.entries(object)) {
-    if (typeof value === 'object') {
 
-      // let [nestedKey, nestedValue] = extractObject(key, value);
-      // flattened[nestedKey] = nestedValue;
-    } else {
-      flattened[key] = value;
+function flattenRecursively(object, flattenObject, flattenKey){
+  for([key, value] of Object.entries(object)){
+    if(typeof value === 'object'){
+      let newKey;
+      if(flattenKey != ''){
+        newKey = flattenKey + '.' + key;
+      }else {
+        newKey =  key;
+      }
+      flattenRecursively(value, flattenObject, newKey);
+    }else {
+      if(flattenKey != ''){
+        key = flattenKey + '.' + key;
+      }
+      flattenObject[key] = value;
     }
   }
-  return flattened;
+  return flattenObject;
 }
 
-const reducer = (concatedKey, currentValue) => {
-  if (typeof currentValue === 'object') {
-
-  }
-
-}
-
-const flatten = (obj, prefix = '', res = {}) =>
-  Object.entries(obj).reduce((r, [key, val]) => {
-    const k = `${prefix}${key}`
-    if (typeof val === 'object') {
-      flatten(val, `${k}.`, r)
-    } else {
-      res[k] = val
-    }
-    console.log(r);
-    return r
-  }, res)
-
-// console.log(flatten(source))
-
-
-function extractObject(key, obj) {
-  if (obj && typeof obj === "object") {
-    let [nestedKey, value] = Object.entries(obj);
-    key += nestedKey;
-    extractObject(nestedKey, value);
-  }
-  return [key, obj];
+function flatten(obj){
+  let object = {};
+  flattenRecursively(obj,object , '');
+  return object;
 }
 
 console.log(flatten(source));
