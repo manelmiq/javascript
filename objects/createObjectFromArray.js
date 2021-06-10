@@ -15,8 +15,6 @@ const arrayOfProperties = [
   "ship/"
 ];
 
-
-
 function transformArrayToObject(arrayOfProperties) {
   let obj = {};
   for(let i = 0; i < arrayOfProperties.length; i++){
@@ -31,7 +29,6 @@ function transformArrayToObject(arrayOfProperties) {
   }
   return obj;
 }
-
 
 console.log(transformArrayToObject(routes));
 
